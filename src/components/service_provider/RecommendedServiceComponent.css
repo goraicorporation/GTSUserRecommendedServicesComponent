@@ -1,0 +1,362 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: ghostwhite;
+}
+
+/* header-part start */
+
+#main-container {
+    max-width: 100% !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.header-part {
+    z-index: 10 !important;
+    background-color: #fff !important;
+}
+.MuiAppBar-colorPrimary {
+    color: black !important;
+}
+/* header-oart end */
+
+/* grid-one part start */
+
+.grid-one {
+    background-color: #007bff;
+    padding-top: 100px !important;
+    padding-bottom: 300px !important;
+    padding-left: 30px !important;
+    padding-right: 20px !important;
+    margin-top: 170px !important;
+}
+.jobSeeker-filters {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.div1 {
+    margin: 10px 0 10px 40px;
+    width: 100%;
+    height: auto;
+    border: 1px solid black;
+  }
+
+.span{
+    color: tomato;
+}
+
+.successMsg{
+    color: green;
+    padding: 4px 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+
+
+.errorMsg{
+    color: red;
+    padding: 4px 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: "Normal";
+}
+
+.skills-form,
+.location-form,
+.industry-form,
+.notice-form,
+.company-form,
+.status-form {
+    max-width: 240px !important;
+    min-width: 15px !important;
+    display: flex !important;
+    margin-top: 20px !important;
+}
+
+.MuiMenu-paper {
+    height: 220px !important;
+}
+.skills-option,
+.location-option,
+.industry-option,
+.notice-option,
+.company-option,
+.status-option {
+    font-size: 17px !important;
+}
+.min-salary,
+.max-salary,
+.min-yr,
+.max-yr {
+    font-size: 15px !important;
+    background-color: #e7e1e1 !important;
+    padding: 8px !important;
+    border-radius: 5px !important;
+}
+
+#slider-block {
+    color: #007bff !important;
+}
+
+.MuiSlider-thumb {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.MuiSlider-track,
+.MuiSlider-rail {
+    height: 5px !important;
+}
+
+/* grid-one part end */
+
+/* grid-two part start */
+
+.grid-two {
+    margin-left: 20px !important;
+    margin-top: 260px !important;
+    margin-right: 100px !important;
+    margin-bottom: 0px !important;
+    align-items: center !important;
+}
+
+.h4-searchtext {
+    font-weight: bold;
+    padding-bottom: 5px;
+    font-size: 20px;
+}
+
+
+.search-text {
+    padding: 18px 10px;
+    font-size: 20px;
+    width: 100%;
+    border: 2px solid #e4e2e2;
+    outline: none;
+}
+
+
+/* .searchBar-input {
+    width: 1100px;
+} */
+
+.Btn-style {
+    background-color: #007bff !important;
+    font-size: 17px !important;
+    color: white !important;
+    margin-left: 30px !important;
+    padding: 10px 30px 10px 30px !important ;
+    margin-bottom: 8px !important;
+    border-radius: 10px !important;
+}
+
+.apply-filter {
+    margin-top: 20px;
+    font-size: 20px;
+    color: gray;
+}
+.chip-class {
+    margin: 5px;
+}
+
+.order-box {
+    margin-top: 10px;
+    padding-left: 50px;
+    font-size: 22px;
+}
+
+.sort{
+    font-size: 22px !important;
+    color: black !important; 
+    padding: 0px 0px !important;
+    text-transform: none !important;
+} 
+/* .sort-name,
+.sort-date,
+.sort-skill:hover {
+    background-color: transparent !important;
+} */
+
+
+/* jobseeker-profile start */
+
+.pagination-sec {
+    margin-bottom: 50px !important;
+}
+.scrollBar {
+    height: 700px !important;
+    overflow-y: scroll !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 30px !important;
+    padding-left: 0 !important;
+    padding-right: 50px !important;
+    max-width: 100% !important;
+}
+
+.scrollBar::-webkit-scrollbar {
+    width: 12px;
+    background-color: #f5f5f5;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: black;
+}
+.user-section {
+    margin-top: 30px !important;
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border: 1px solid black;
+    padding: 10px 20px 10px 20px !important;
+}
+.fa-user-circle {
+    font-size: 80px;
+}
+#jobseeker-name {
+    font-size: 25px !important;
+    padding: 0 !important;
+    font-weight: bold !important;
+    color: black !important;
+    text-transform: none !important;
+}
+
+#jobseeker-name:hover {
+    background-color: #fff;
+}
+
+.job-status-InActive,
+.job-status-Active,
+.job-status-RecentlyJoined {
+    margin-left: 20px;
+    font-size: 25px !important;
+}
+
+.job-status-Active {
+    color: green !important;
+}
+
+.job-status-InActive {
+    color: red !important;
+}
+
+.job-status-RecentlyJoined {
+    color: #007bff !important;
+}
+.modal-status {
+    font-size: 20px !important;
+}
+.modal-date {
+    padding-left: 150px;
+    font-size: 15px;
+    color: hotpink;
+}
+.modal-location {
+    padding-left: 90px;
+    font-size: 15px;
+    color: hotpink;
+}
+.modal-account {
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+
+#modalActiveBtn,
+#modalDeactivateBtn,
+#modalCloseBtn {
+    background-color: #007bff !important;
+    color: white !important;
+    font-size: 20px !important;
+    margin: 10px !important;
+    padding-right: 20px !important;
+}
+.modal-button {
+    color: white !important;
+    padding-right: 10px !important;
+    font-size: 40px !important;
+}
+
+.jobseeker-skills {
+    font-size: 18px;
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+}
+
+.jobseeker-company {
+    font-size: 18px;
+    font-weight: bold;
+}
+.date-sec {
+    font-size: 18px;
+    font-weight: bold;
+}
+.year-sec {
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.location-sec {
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.job-date {
+    font-size: 18px;
+    font-weight: bold;
+    color: hotpink;
+}
+.job-year {
+    font-size: 18px;
+    font-weight: bold;
+    color: hotpink;
+}
+.job-location {
+    font-size: 18px;
+    font-weight: bold;
+    color: hotpink;
+}
+.account-status {
+    font-size: 18px;
+    font-weight: bold;
+}
+.MuiDialog-paperWidthSm {
+    max-width: 900px !important;
+}
+
+.dialog-header {
+    font-size: 30px !important;
+}
+.MuiTypography-h6 {
+    font-size: 25px !important;
+}
+/* jobseeker-profile end */
+
+/* grid-two part end */
+
+/* pagination start */
+
+.pagination-wrapper {
+    margin-left: 500px;
+    margin-top: 200px;
+}
+.pagination .page-item .page-link {
+    font-size: 25px !important;
+    font-weight: bold;
+    padding: 10px 20px 10px 20px;
+}
+.on-link-focus:focus {
+    background-color: #4285f4 !important;
+}
+
+
+/* pagination end */
