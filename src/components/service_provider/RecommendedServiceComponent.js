@@ -9,7 +9,8 @@ import {Grid,Input,} from "@material-ui/core";
 import { Button} from "reactstrap";
 import { Dropdown,InputGroup,Form, Collapse } from "react-bootstrap";
 import ShowMoreText from 'react-show-more-text';
-import { properties } from '../../properties/Properties.js';
+import { endpoints_properties } from '../../properties/EndPointsProperties.js';
+import { api_properties } from '../../properties/APIProperties.js';
 
 var token = ls.get("token");
 var jsonPayLoad = ls.get("jsonPayLoad");
@@ -38,7 +39,7 @@ class RecommendedServiceComponent extends Component {
   }
 
   componentDidMount(){
-    var url = properties.ENDPOINT_RECOMMENDED_SERVICES_LOCAL+"/api/v1/gts_user_recommended_job/gts_user_id/"+gts_user_id;
+    var url = endpoints_properties.ENDPOINT_RECOMMENDED_SERVICES_LOCAL+api_properties.API_GET_RECOMMENDED_SERVICES+gts_user_id;
     axios.get(url,{ headers: {"Auth_Token" : `Bearer ${token}`} })
     .then(response =>{
     console.log(response.data)
@@ -53,7 +54,7 @@ class RecommendedServiceComponent extends Component {
   }
 
   autoCompleteChangeHandler = (input) =>{
-    var skill_url = "http://localhost:4744/api/v1/skills/active";
+    var skill_url = endpoints_properties.ENDPOINT_SKILLS_LOCAL+api_properties.API_GET_ACTIVE_SKILLS;
     axios.get(skill_url,{ headers: {"Auth_Token" : `Bearer ${token}`} })
     .then((response) => {
       this.state.skills = response.data;
@@ -76,7 +77,7 @@ class RecommendedServiceComponent extends Component {
 
 
   applyForJob =(gts_job_application_status, gts_job_id) =>{
-    var url ="http://localhost:4740/api/v1/job/applications";
+    var url =endpoints_properties.ENDPOINT_SERVICE_APPLICATIONS_LOCAL+api_properties.API_POST_SERVICE_APPLICATIONS;
 
     var jobApplicationPostPayLoad = {
       "gts_applied_job_id": gts_job_id,

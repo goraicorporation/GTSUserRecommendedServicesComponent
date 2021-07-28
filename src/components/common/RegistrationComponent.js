@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { endpoints_properties } from '../../properties/EndPointsProperties.js';
+import { api_properties } from '../../properties/APIProperties.js';
 // reactstrap components
 import {
   Button,
@@ -273,7 +274,7 @@ class RegistrationComponent extends React.Component {
     var validationResultOfForm = this.formIsValid;
 
     let responses = this.state.responses;
-    var url = "http://localhost:4728/api/v1/user/email"
+    var url = endpoints_properties.ENDPOINT_IDENTITY_LOCAL+api_properties.API_REGISTER;
 
     var payload = {
 
@@ -391,9 +392,7 @@ class RegistrationComponent extends React.Component {
     // validationResult = true;
     //let responses = this.state.responses;
 
-    var url2 = "http://localhost:4728/api/v1/user/role";
-    //localhost:4728/api/v1/user/role
-
+    var url2 = endpoints_properties.ENDPOINT_IDENTITY_LOCAL+ api_properties.API_ADD_ROLES;
     var rolesPayload = [];
 
     console.log("no. of roles: " + arr.length);

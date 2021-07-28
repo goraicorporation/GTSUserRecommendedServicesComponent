@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 //import { login } from '../redux/action/user';
 import axios from 'axios';
 import {NavLink} from 'reactstrap';
-
+import { endpoints_properties } from '../../properties/EndPointsProperties.js';
+import { api_properties } from '../../properties/APIProperties.js';
 
 // reactstrap components
 import {
@@ -184,7 +185,7 @@ class LoginComponent extends Component {
       }
 
        componentDidMountRole(){
-        var url="http://localhost:4728/api/v1/user/roles";
+        var url=endpoints_properties.ENDPOINT_IDENTITY_LOCAL+api_properties.API_GET_USER_ROLES;
         //var url="https://o3xznf3iy6.execute-api.ap-south-1.amazonaws.com/dev/api/v1/users/role";
         axios.get(url, {
           params: {
@@ -239,7 +240,7 @@ class LoginComponent extends Component {
     if (validationResult) {
       let fields = this.state.fields;
       var dataResponse='';
-      var url=`http://localhost:4728/api/v1/user/login/email`;
+      var url=endpoints_properties.ENDPOINT_IDENTITY_LOCAL+api_properties.API_LOGIN;
       //var url=`https://o3xznf3iy6.execute-api.ap-south-1.amazonaws.com/dev/api/v1/user/login/email`;
 
       
@@ -310,7 +311,7 @@ class LoginComponent extends Component {
                    ls.set('gts_user_id',jsonPayLoad.user_id)
                    ls.set('token',res.data.token);
 
-                   var personalURL="http://localhost:4753/api/v1/users/personal_details/gts_user_id/"+jsonPayLoad.user_id;
+                   var personalURL=endpoints_properties.ENDPOINT_PERSONAL_DETAILS_LOCAL+api_properties.API_GET_USER_PERSONAL_DETAILS+jsonPayLoad.user_id;
                    axios.get(personalURL,{ headers: {'Auth_Token' : `Bearer ${res.data.token}`} })
                   .then(res => {
                    ls.set('userPersonalDetails', res.data)
