@@ -14,7 +14,9 @@ import { properties } from '../../properties/Properties.js';
 var token = ls.get("token");
 var jsonPayLoad = ls.get("jsonPayLoad");
 var userPersonalDetails=ls.get('userPersonalDetails');
+if(jsonPayLoad!==null){
 var gts_user_id = jsonPayLoad.user_id;
+}
 class RecommendedServiceComponent extends Component {
 
   constructor(props) {
@@ -72,7 +74,7 @@ class RecommendedServiceComponent extends Component {
     this.setState({appliedMessage: ''})
   }
 
-  
+
   applyForJob =(gts_job_application_status, gts_job_id) =>{
     var url ="http://localhost:4740/api/v1/job/applications";
 
@@ -136,7 +138,7 @@ class RecommendedServiceComponent extends Component {
               error: error
               })
             }
-          })  
+          })
         }
         if(this.state.appliedMessage == '' && this.state.appliedMessage == null){
           if(response.data[i].gts_applied_job_id  !== gts_job_id){
@@ -158,7 +160,7 @@ class RecommendedServiceComponent extends Component {
               this.setState({message : message})
             }
          })
-              
+
          .catch(error =>{
           if(error.response.data.status_code == 400 || error.response.data.status_code == 404){
             this.setState({
@@ -216,7 +218,7 @@ class RecommendedServiceComponent extends Component {
 
   render() {
     return (
-     <div className="mt-3"> 
+     <div className="mt-3">
      <div>
      <div >
             <span style={{color:'green'}}><strong><center>{this.state.message}</center></strong></span>
@@ -384,7 +386,7 @@ class RecommendedServiceComponent extends Component {
                     </div>
                   </div>
                 </div>
-              </div> 
+              </div>
 
               <div id={"jobProposal"+item.gts_job_id} class="modal fade" role="dialog">
                 <div class="modal-dialog modal-lg ">
