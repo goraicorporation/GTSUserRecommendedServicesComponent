@@ -18,9 +18,11 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-//import backgroundImage from '../assets/img/icons/common/4.svg';
 import { Card, CardBody, CardText, FormControl, FormLabel, FormCheck } from 'react-bootstrap';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAlignRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import "./../../css/tooltip.scss";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 class RegistrationComponent extends React.Component {
   componentDidMount() {
@@ -56,6 +58,8 @@ class RegistrationComponent extends React.Component {
     };
     this.onRadioChange = this.onRadioChange.bind(this);
   }
+
+  
 
   onRadioChange = (e) => {
     if (e.target.value == "ServiceProvider") {
@@ -118,11 +122,9 @@ class RegistrationComponent extends React.Component {
   };
 
   clearEmailError = e => {
-    //let fields = this.state.fields;
+    let responses = this.state.responses;
     let errors = this.state.errors;
     let formIsValid = true;
-
-    //alert("Field name: "+e.target.name)
 
     if (e.target.name == "email") {
       errors["email"] = "";
@@ -131,10 +133,18 @@ class RegistrationComponent extends React.Component {
       });
       return formIsValid;
     }
+
+    if (e.target.name == "registrationError") {
+      responses["registrationError"] = "";
+      this.setState({
+        responses: responses
+      });
+      return formIsValid;
+    }
   }
 
   clearPasswordError = e => {
-    //let fields = this.state.fields;
+    let responses = this.state.responses;
     let errors = this.state.errors;
     let formIsValid = true;
 
@@ -147,10 +157,18 @@ class RegistrationComponent extends React.Component {
       });
       return formIsValid;
     }
+
+    if (e.target.name == "registrationError") {
+      responses["registrationError"] = "";
+      this.setState({
+        responses: responses
+      });
+      return formIsValid;
+    }
   }
 
   clearConfirmPasswordError = e => {
-    //let fields = this.state.fields;
+    let responses = this.state.responses;
     let errors = this.state.errors;
     let formIsValid = true;
 
@@ -163,14 +181,29 @@ class RegistrationComponent extends React.Component {
       });
       return formIsValid;
     }
+
+    if (e.target.name == "registrationError") {
+      responses["registrationError"] = "";
+      this.setState({
+        responses: responses
+      });
+      return formIsValid;
+    }
   }
 
   validateEmail = e => {
-    //let fields = this.state.fields;
+    let responses = this.state.responses;
     let errors = this.state.errors;
     let formIsValid = true;
 
     //alert("Validate Email: "+this.state.email)
+
+      responses["registrationError"] = "";
+      this.setState({
+        responses: responses
+      });
+      return formIsValid;
+    
 
     if (!this.state.email) {
       //alert("Enter email")
@@ -183,10 +216,6 @@ class RegistrationComponent extends React.Component {
     }
 
     if (typeof this.state.email !== "undefined") {
-      //Production
-      //var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-
-      //Development
       var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
 
       if (!pattern.test(this.state.email)) {
@@ -215,11 +244,7 @@ class RegistrationComponent extends React.Component {
     }
 
     if (typeof this.state.password !== "undefined") {
-      //Production
-      //if (!fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)) {
-
-      //Development
-      if (!this.state.password.match(/^.*(?=.{2,}).*$/)) {
+      if (!this.state.password.match(/^.*(?=.{8,20})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&+=*><?_~]).*$/)) {
         formIsValid = false;
         errors["password"] = "Please enter secure and strong password .";
         this.setState({
@@ -245,11 +270,7 @@ class RegistrationComponent extends React.Component {
     }
 
     if (typeof this.state.confirmPassword !== "undefined") {
-      //Production
-      //if (!fields["confirmPassword"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)) {
-
-      //Development
-      if (!this.state.confirmPassword.match(/^.*(?=.{2,}).*$/)) {
+      if (!this.state.confirmPassword.match(/^.*(?=.{8,20})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&+=*><?_~]).*$/)) {
         formIsValid = false;
         errors["confirmPassword"] = "Please enter secure and strong password .";
         this.setState({
@@ -274,7 +295,7 @@ class RegistrationComponent extends React.Component {
     var validationResultOfForm = this.formIsValid;
 
     let responses = this.state.responses;
-    var url = endpoints_properties.ENDPOINT_IDENTITY_LOCAL+api_properties.API_REGISTER;
+    var url = endpoints_properties.ENDPOINT_DEV+api_properties.API_REGISTER;
 
     var payload = {
 
@@ -287,60 +308,59 @@ class RegistrationComponent extends React.Component {
     axios
       .post(url, payload)
       .then(response => {
-
-        console.log("Response data: " + response.data);
-        console.log("UserID: " + response.data.gts_user_id);
         this.setState({
           gts_user_id: response.data.gts_user_id
         })
 
         if (validationResultOfForm == false) {
-
-          console.log("inside if block of onSubmitHandle method");
-
           responses["registrationError"] = response.data.message;
-          console.log("form is not valid")
-
-          console.log("setting the state");
           this.setState({
             responses: responses
           });
-          console.log("state is set");
-
         }
-
         else {
-          console.log("inside else block of onSumbitHandler method");
-
           let user_id = this.state.gts_user_id;
-          console.log("user:" + user_id);
-
-          var ro = this.onSubmitHandlerRole(user_id, e);
-          console.log("the value of ro: " + ro);
-          if (ro === true) {
-
-            console.log("roles are returned");
-
-            responses["registrationSuccess"] = "Registration is successful";
-
-            this.setState({
-              responses: responses
-
-            });
+          console.log(response.data)
+          if(response.data.status_code == 400 || response.data.status_code == 404 ){
+            responses["registrationError"] = response.data.message
+          }
+          else{
+            var ro = this.onSubmitHandlerRole(user_id, e);
+            alert(ro)
+            if (ro === true) {
+              alert("Registerd")
+              responses["registrationSuccess"] = "Registration is successful";
+              this.setState({
+                responses: responses
+              });
+            }   
           }
         }
       })
       .catch(error => {
-        console.log("registration failed");
-          responses["registrationError"] = "Error while Registering! Please Try again...";
+        if(error.response){
+          if(error.response.data.status_code == 400 || error.response.data.status_code == 404 ){
+            responses["registrationError"] = error.response.data.message;
             this.setState({
               responses: responses
             });
+          }
+          else{
+            responses["registrationError"] = "Error while Registering! Please Try again...";
+              this.setState({
+                responses: responses
+              });
+            }
+          }
+          else{
+            responses["registrationError"] = "Error while Registering! Please Try again...";
+          }
       });
   };
 
 
   onSubmitHandlerRole(user_id, e) {
+    let responses = this.state.responses;
     var arr = [];
     console.log("userId inside handler method: " + user_id);
     if (this.state.isServiceProvider === true) {
@@ -356,9 +376,7 @@ class RegistrationComponent extends React.Component {
       arr.push(4);
     }
 
-    //alert("array length="+arr.length);
     if (arr.length === 0) {
-      //alert("Roles is not checked");
       this.state.errors.roleError = "Please select atleast one role";
     }
 
@@ -379,79 +397,66 @@ class RegistrationComponent extends React.Component {
       defaultRole = 4;
     }
 
-    // alert("default role:" +defr);
     if (defaultRole == 0) {
-      //alert("default role is not selected");
       this.state.errors.defaultRoleError = "Please select one default role";
     }
 
     e.preventDefault();
     var RoleValidationResult = arr.length>0 && defaultRole>0;
-    //add condition
-    console.log("Role Validation result: " +RoleValidationResult);
-    // validationResult = true;
-    //let responses = this.state.responses;
 
-    var url2 = endpoints_properties.ENDPOINT_IDENTITY_LOCAL+ api_properties.API_ADD_ROLES;
+    var url2 = endpoints_properties.ENDPOINT_DEV+ api_properties.API_ADD_ROLES;
     var rolesPayload = [];
 
-    console.log("no. of roles: " + arr.length);
     for (var i = 0; i < arr.length; i++) {
       let role_id = arr[i];
       let isPrimary = 0;
-      console.log("role_id: " + role_id);
-      console.log("defaultRole: " + defaultRole);
 
       if (role_id === defaultRole) {
         isPrimary = 1;
       }
 
       var userRole = {
-        "gts_user_id": user_id,
-        "userRole":[{
-          "gts_role_id": role_id,
-          "gts_user_role_is_primary": isPrimary
-        }]
+        "gts_role_id": role_id,
+        "gts_user_role_is_primary": isPrimary
       };
-      rolesPayload[i] = userRole;
 
+      rolesPayload[i] = userRole;
+      var userRoles = {
+        "gts_user_id": user_id,
+        "userRole":rolesPayload
+      };  
     }
-    /*
-        var payload2 = [{
-          "gts_user_id": user_id,
-          "roles": listOfRoles,
-          "primary_role_id": defr
-        }];
-        */
-    //let json = JSON.stringify(rolesPayload);
     console.log("rolesPayload: " + JSON.stringify(rolesPayload));
 
     if(RoleValidationResult == true){
     axios 
-      .post(url2, userRole)
+      .post(url2, userRoles)
       .then(response => {
-        console.log("data: " + response.data);
+        console.log(response.data);
         let message = response.message;
-        if (response.data.success == "false") {
-          console.log("Not able to create roles");
-          return false;
-        }
-        else {
-          console.log("Roles created successfully");
           return true;
-        }
       })
       .catch(error => {
-        console.log("Error while creating roles: " + error);
+        console.log(error.response.data);
+        responses["registrationError"] = "Not able to add roles.";
+        this.setState({
+          responses: responses
+        });
+        return false;
       });
-      return RoleValidationResult;
+      return true;
     }
     else{
-      console.log("Not able to insert roles");
-      return RoleValidationResult;
+      return false;
+      responses["registrationError"] = "Not able to add roles.";
+        this.setState({
+          responses: responses
+        });
     }
   };
 
+ 
+  
   render() {
 
     const errorMessageStyles = {
@@ -475,20 +480,10 @@ class RegistrationComponent extends React.Component {
         {/* <DemoNavbar /> */}
         <main ref="main">
           <section className="section section-shaped section-lg">
-            {/* <div className="shape shape-style-1 bg-gradient-default"> */}
-            {/* <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span /> */}
-            {/* </div> */}
 
             <div class="d-flex justify-content-around">
               <div Align="left">
-                <Container className="pt-lg-md">
+                <Container className="pt-lg-md p-4">
                   <Row className="mt-7">
                     <Col >
                       <Card border="primary" style={{ width: '20rem' }}>
@@ -544,7 +539,7 @@ class RegistrationComponent extends React.Component {
                             <div divID="emailError" style={errorMessageStyles}>{this.state.errors.email}</div>
                           </FormGroup>
 
-                          <FormGroup className="mb-3" controlId="formBasicPassword">
+                          <FormGroup className="mb-3" controlId="formBasicPassword" style={{clear:"both"}} >
                             <FormLabel>Enter Password</FormLabel>
                             <InputGroup>
 
@@ -560,7 +555,26 @@ class RegistrationComponent extends React.Component {
                                 onFocus={this.clearPasswordError}
                               />
                             </InputGroup>
+                            <OverlayTrigger placement="bottom" overlay={
+                              <Tooltip
+                              className="mytooltip"
+                              style={{backgroundColor:"white",border:"none"}}
+                              >
+                                <h6>Password must have:</h6>
+                                <div style={{textAlign:"left",width:"95%",margin:"auto"}}>
+                                    &#9913; At least <span style={{color:"red"}}>8</span> characters.<br/>
+                                    &#9913; At least <span style={{color:"red"}}>one lower case</span> letter.<br/> 
+                                    &#9913; At least <span style={{color:"red"}}>one upper case</span> letter.<br/> 
+                                    &#9913; At least <span style={{color:"red"}}>one number</span>.<br/> 
+                                    &#9913; At least <span style={{color:"red"}}>one special character</span> &#160;&#160;&#160;&#160;like !@#$%^&#38;+=*&#62;&#60;?_~<br/> 
+                                </div>
+                              </Tooltip>
+                                  }
+                            >
+                                <FontAwesomeIcon icon={faInfoCircle} style={info} />
+                            </OverlayTrigger>
                           </FormGroup>
+                          
                           <FormGroup className="mb-3">
                             <div divID="passwordError" style={errorMessageStyles}>{this.state.errors.password}</div>
                           </FormGroup>
@@ -737,6 +751,12 @@ const bgImage = {
   //backgroundImage: `url(${backgroundImage})`
 };
 
+const info = {
+  color: "lightblue",
+  width: "10px",
+  cursor: "pointer",
+  float: "right"
+};
 export default RegistrationComponent;
 
 

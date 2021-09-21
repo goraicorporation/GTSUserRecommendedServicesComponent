@@ -130,10 +130,6 @@ class LoginComponent extends Component {
     }
 
     if (typeof fields["email"] !== "undefined") {
-        //Production
-        //var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-
-        //Development
         var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
 
         if (!pattern.test(fields["email"])) {
@@ -165,11 +161,7 @@ class LoginComponent extends Component {
 
 
         if (typeof fields["password"] !== "undefined") {
-          //Production
-          //if (!fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)) {
-
-          //Development
-          if (!fields["password"].match(/^.*(?=.{2,})(?=.*\d).*$/)) {
+          if (!fields["password"].match(/^.*(?=.{8,20})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&+=*><?_~]).*$/)) {
             formIsValid = false;
             errors["password"] = "Please enter secure and strong password .";
           }
@@ -183,29 +175,6 @@ class LoginComponent extends Component {
 
       componentDidMount() {
       }
-
-       componentDidMountRole(){
-        var url=endpoints_properties.ENDPOINT_IDENTITY_LOCAL+api_properties.API_GET_USER_ROLES;
-        //var url="https://o3xznf3iy6.execute-api.ap-south-1.amazonaws.com/dev/api/v1/users/role";
-        axios.get(url, {
-          params: {
-            gts_user_id:this.state.gts_user_id
-          }
-        })
-        .then(function (response) {
-          this.setState({jobsString:this.getJobArrayTypo(response.data)});
-          const roles=response.data;
-          this.setState({
-            roles,
-                  });
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-        .then(function () {
-          // always executed
-        });
-       }
 
   loginInvalid = () => {
     if (this.props.user.isLogin === false) {
@@ -240,10 +209,7 @@ class LoginComponent extends Component {
     if (validationResult) {
       let fields = this.state.fields;
       var dataResponse='';
-      var url=endpoints_properties.ENDPOINT_IDENTITY_LOCAL+api_properties.API_LOGIN;
-      //var url=`https://o3xznf3iy6.execute-api.ap-south-1.amazonaws.com/dev/api/v1/user/login/email`;
-
-      
+      var url=endpoints_properties.ENDPOINT_DEV+api_properties.API_LOGIN;
 
        var payload = {
          gts_user_email: fields["email"],
@@ -311,7 +277,7 @@ class LoginComponent extends Component {
                    ls.set('gts_user_id',jsonPayLoad.user_id)
                    ls.set('token',res.data.token);
 
-                   var personalURL=endpoints_properties.ENDPOINT_PERSONAL_DETAILS_LOCAL+api_properties.API_GET_USER_PERSONAL_DETAILS+jsonPayLoad.user_id;
+                   var personalURL=endpoints_properties.ENDPOINT_DEV+api_properties.API_GET_USER_PERSONAL_DETAILS+jsonPayLoad.user_id;
                    axios.get(personalURL,{ headers: {'Auth_Token' : `Bearer ${res.data.token}`} })
                   .then(res => {
                    ls.set('userPersonalDetails', res.data)
@@ -339,7 +305,12 @@ class LoginComponent extends Component {
                 errors["password"] = "Not able to login. Please contact the administrator";
               }
                else{
-                errors["password"] = err.response.data.message;
+                 if(err.response.status > 500){
+                  errors["password"] = "Not able to login. Please contact the administrator";
+                 }
+                 else{
+                  errors["password"] = err.response.data.message;
+                 }
                }
               this.setState({
                errors: errors,
@@ -359,15 +330,6 @@ class LoginComponent extends Component {
             //padding: paddings
         }
 
-
-        // let logintoken;
-        //  if (token=="undefined" || token=="" || token==null) {
-        //   logintoken = <Redirect to="/" />;
-        // } else {
-        //   logintoken = <Redirect to="/login" />;
-        // }
-
-
         return (
 
           <>
@@ -376,7 +338,7 @@ class LoginComponent extends Component {
               <div class="d-flex justify-content-around">
               <div className="left">
               <Container className="left">
-              <Row className="left mt-7">
+              <Row className="left mt-7 p-4">
                 <Col lg="5">
               <Card border='primary'  style={{ width: '16rem' }} Align='left'>
 
