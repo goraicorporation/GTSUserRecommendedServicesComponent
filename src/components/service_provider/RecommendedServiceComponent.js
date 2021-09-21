@@ -39,7 +39,7 @@ class RecommendedServiceComponent extends Component {
   }
 
   componentDidMount(){
-    var url = endpoints_properties.ENDPOINT_RECOMMENDED_SERVICES_LOCAL+api_properties.API_GET_RECOMMENDED_SERVICES+gts_user_id;
+    var url = endpoints_properties.ENDPOINT_DEV+api_properties.API_GET_RECOMMENDED_SERVICES+gts_user_id;
     axios.get(url,{ headers: {"Auth_Token" : `Bearer ${token}`} })
     .then(response =>{
     console.log(response.data)
@@ -54,7 +54,7 @@ class RecommendedServiceComponent extends Component {
   }
 
   autoCompleteChangeHandler = (input) =>{
-    var skill_url = endpoints_properties.ENDPOINT_SKILLS_LOCAL+api_properties.API_GET_ACTIVE_SKILLS;
+    var skill_url = endpoints_properties.ENDPOINT_DEV+api_properties.API_GET_ACTIVE_SKILLS;
     axios.get(skill_url,{ headers: {"Auth_Token" : `Bearer ${token}`} })
     .then((response) => {
       this.state.skills = response.data;
@@ -77,7 +77,7 @@ class RecommendedServiceComponent extends Component {
 
 
   applyForJob =(gts_job_application_status, gts_job_id) =>{
-    var url =endpoints_properties.ENDPOINT_SERVICE_APPLICATIONS_LOCAL+api_properties.API_POST_SERVICE_APPLICATIONS;
+    var url =endpoints_properties.ENDPOINT_DEV+api_properties.API_POST_SERVICE_APPLICATIONS;
 
     var jobApplicationPostPayLoad = {
       "gts_applied_job_id": gts_job_id,
