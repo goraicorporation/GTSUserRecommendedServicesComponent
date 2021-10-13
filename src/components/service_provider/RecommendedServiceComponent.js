@@ -39,7 +39,7 @@ class RecommendedServiceComponent extends Component {
   }
 
   componentDidMount(){
-    var url = endpoints_properties.ENDPOINT_DEV+api_properties.API_GET_RECOMMENDED_SERVICES+gts_user_id;
+    var url = endpoints_properties.ENDPOINT_PROD+api_properties.API_GET_RECOMMENDED_SERVICES+gts_user_id;
     axios.get(url,{ headers: {"Auth_Token" : `Bearer ${token}`} })
     .then(response =>{
     console.log(response.data)
@@ -48,13 +48,14 @@ class RecommendedServiceComponent extends Component {
     .catch(error => {
        this.setState({status:400})
        this.setState({recommendedJobs: []})
+       this.setState({error: 'No Recommended Services'})
       })
 
       this.autoCompleteChangeHandler();
   }
 
   autoCompleteChangeHandler = (input) =>{
-    var skill_url = endpoints_properties.ENDPOINT_DEV+api_properties.API_GET_ACTIVE_SKILLS;
+    var skill_url = endpoints_properties.ENDPOINT_PROD+api_properties.API_GET_ACTIVE_SKILLS;
     axios.get(skill_url,{ headers: {"Auth_Token" : `Bearer ${token}`} })
     .then((response) => {
       this.state.skills = response.data;
@@ -77,7 +78,7 @@ class RecommendedServiceComponent extends Component {
 
 
   applyForJob =(gts_job_application_status, gts_job_id) =>{
-    var url =endpoints_properties.ENDPOINT_DEV+api_properties.API_POST_SERVICE_APPLICATIONS;
+    var url =endpoints_properties.ENDPOINT_PROD+api_properties.API_POST_SERVICE_APPLICATIONS;
 
     var jobApplicationPostPayLoad = {
       "gts_applied_job_id": gts_job_id,
@@ -94,7 +95,7 @@ class RecommendedServiceComponent extends Component {
       "gts_job_offered_date"  :""
     }
 
-    var getURL = "http://localhost:4740/api/v1/job/applications/applicant_id/"+gts_user_id;
+    var getURL = endpoints_properties.ENDPOINT_PROD+api_properties.API_GET_SERVICE_APPLICATIONS_BY_APPLICANT_ID+gts_user_id;
     axios.get(getURL,{ headers: {"Auth_Token" : `Bearer ${token}`} })
     .then(response =>{
       console.log(response.data)
@@ -227,7 +228,8 @@ class RecommendedServiceComponent extends Component {
             <span style={{color:'red'}}><strong><center>{this.state.updateError}</center></strong></span>
             <span style={{color:'red'}}><strong><center>{this.state.error}</center></strong></span>
           </div>
-        {this.state.recommendedJobs.map((item)=>(
+        {
+        this.state.recommendedJobs.map((item)=>(
          <InputGroup>
            <Grid container spacing={2}>
             <Grid item xs={11}>
